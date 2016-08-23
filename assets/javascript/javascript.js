@@ -56,11 +56,11 @@ $(document).ready(function(){
 		morrison = new sound("assets/sounds/morrison_fire.mp3");
 
 	// Song Arrays //
-		garciaSongArray = [ touchofgrey ];
-		hendrixSongArray = [ allalongthewatchtower ];
-		janisSongArray = [ alittlepiece ];
-		lennonSongArray = [ help ];
-		morrisonSongArray = [ lightmyfire ];
+		garciaSongArray = [ garcia_touch];
+		hendrixSongArray = [ hendrix_watch ];
+		janisSongArray = [ janis_heart ];
+		lennonSongArray = [ lennon_help ];
+		morrisonSongArray = [ morrison_fire ];
 	}
 
 // CLASSES //
@@ -170,6 +170,15 @@ $(document).ready(function(){
 		}
 	}
 
+	var updateHP = function() {
+
+		$('.player').find('.hp').empty()
+		$('.chosen-challenger').find('.hp').empty()
+
+		$('.player').find('.hp').append("\xa0 HP: "+ $('.player').data("character").hp)
+		$('.chosen-challenger').find('.hp').append("\xa0 HP: "+ $('.chosen-challenger').data("character").hp)
+	}
+
 // SOUNDS INIT //
 
 	soundInit()
@@ -210,11 +219,11 @@ $(document).ready(function(){
 		characterSelected = false;
 		challengerSelected = false; // reset to true once an enemy is defeated 
 
-		jerryGarcia = new character("Jerry Garcia", jerryGarciaImg, jerryGarciaSongArray, 1000, 10, 10);
-		jimiHendrix = new character("Jimi Hendrix", jimiHendrixImg, jimiHendrixSongArray, 800, 10, 10);
-		janisJoplin = new character("Janis Joplin", janisJoplinImg, janisJoplinSongArray, 900, 10, 10);
-		johnLennon = new character("John Lennon", johnLennonImg, johnLennonSongArray, 750, 10, 10);
-		jimMorrison = new character("Jim Morrison", jimMorrisonImg, jimMorrisonSongArray, 700, 10, 10);
+		jerryGarcia = new character("Jerry Garcia", garciaImg, garciaSongArray, 1000, 10, 10);
+		jimiHendrix = new character("Jimi Hendrix", hendrixImg, hendrixSongArray, 800, 10, 10);
+		janisJoplin = new character("Janis Joplin", janisImg, janisSongArray, 900, 10, 10);
+		johnLennon = new character("John Lennon", lennonImg, lennonSongArray, 750, 10, 10);
+		jimMorrison = new character("Jim Morrison", morrisonImg, morrisonSongArray, 700, 10, 10);
 
 		// Characters to DIV //
 		$("#jerryGarcia").data("character", jerryGarcia)
@@ -222,7 +231,7 @@ $(document).ready(function(){
 		$("#jerryGarcia").find('.name').append($("#jerryGarcia").data("character").name)
 		charSelect.append($('#jerryGarcia'))
 		
-		$("#jimiHendrix").data("character", jimMorrison)
+		$("#jimiHendrix").data("character", jimiHendrix)
 		$("#jimiHendrix").find('.hp').append($("#jimiHendrix").data("character").hp)
 		$("#jimiHendrix").find('.name').append($("#jimiHendrix").data("character").name)
 		charSelect.append($('#jimiHendrix'))
@@ -305,6 +314,8 @@ $(document).ready(function(){
 			$('.chosen-challenger').data('character').hp -= playerAttack;
 			console.log("challenger hp: " + $('.chosen-challenger').data('character').hp);
 
+			updateHP()
+
 			// Attack Slogan //
 			textAreaCheck()
 			$("#text-area").prepend("<p>You attacked " + $(".chosen-challenger").data('character').name +
@@ -320,10 +331,12 @@ $(document).ready(function(){
 			$('.player').data('character').hp -= challengerAttack;
 			console.log("player hp: " + $('.player').data('character').hp);
 
+			updateHP()
+
 			// Counter Attack Slogan //
 			textAreaCheck()
 			$("#text-area").prepend('<p>' + $(".chosen-challenger").data('character').name + " attacked you for " +
-			" for " + challengerAttack + " damage!<hr></p>")
+			" for " + challengerAttack + " Cancelled!<hr></p>")
 
 // END this GAME //
 
