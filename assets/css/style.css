@@ -1,49 +1,56 @@
 html { 
-	background: url("../images/burner.jpg") no-repeat center center fixed;
+	background: url("../images/mrpostman.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
-  -moz-background-size: cover;
+ /* -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  z-index: 0;
+  z-index: 0;*/
 }
 
 body {
 	font-family: 'Lakki Reddy', cursive;
- 	background: transparent; }
-
+ 	background: transparent; 
+ }
 
 img {
 	width: 100%;
-	border: 20px solid purple;
-	border-radius: 10%;
+	border: 30px solid red;
 	margin-top: 10px;
 	float:center;
 }
+/*button {
+	text-align: center;
+}*/
 
-#character-select, #challengers  {
+/*#character-select, #challengers {
 	margin-top: 70px;
-}
+}*/
 
-
-#deck {
+#action {
 	margin-top: 200px;
 	float:relative;
-
 }
+
+/*#deck img{
+	width: 120%;
+	float:left;
+}*/
 
 #character-row-1 {
 	height: 50px;
 }
 
-
 #character-select img {
-	width: 25%;
+	width: 100%;
+	/*margin: 10px 0;*/
 }
-
+#character-select, #challengers {
+	margin-top: 70px;
+}
 
 #challengers img{
 	width: 50%;
-
+	/*margin: 10px 0;*/
 }
 
 #challengers{
@@ -55,35 +62,48 @@ nav {
 	opacity: .3;
 }
 
-#title {
+h1 {
+	font-size: 30px;
+	color: white;
+	text-align: center;}
+h2 {
+	font-size: 90px;
+	color: blue;
+	text-align: center;
 }
+/*#title {
+}*/
 
 #text-area {
 	height: 600px;
 	width: 1000px;
-	font-size: 40px;
+	font-size: 80px;
+	color: red;
 	background-color: white;
-	opacity: .5;
-	border: 10px solid purple;
-	border-radius: 20%;
-	margin-top: 250px;
+	opacity: .8;
+	border: 20px solid red;
+	/*margin-top: 40px;*/
+	margin: 50px 0 0 100px;
 }
 
 #text-area hr {
 	margin: 200px 0;
 }
 
-
-.character {
-
-
+/*.character {
+position: relative;
+	height: 140px;
 }
+.character img {
+	position:absolute;
+	width: 100%;
+}*/
 
 .character .name {
 	font-size: 40px;
 	color: white;
 	position: relative;
-	top: 20px;
+	top: 15px;
 	
 }
 
@@ -91,8 +111,14 @@ nav {
 	font-size: 25px;
 	color: white;
 	position: relative;
-	top: 200px;
-	margin: -15px 0;
-	
+	top: 25px;
+	margin: -20px 0;	
+}
 
+#character-select2 {
+	margin-right: 225px;
+}
+
+#action {
+	/*margin-left: 10px;*/
 }

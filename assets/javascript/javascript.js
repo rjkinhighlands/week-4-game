@@ -6,11 +6,13 @@ $(document).ready(function(){
 	
 	console.log("javascript loaded")
 	// Music //
-	var garcia_touch;
-	var hendrix_watch;
-	var janis_heart;
-	var lennon_help;
-	var morrison_fire;
+	var mrpostman;
+	var garciatouch;
+	var hendrixwatch;
+	var janisheart;
+	var lennonhelp;
+	var morrisonstrange;
+	var finafire;
 
 	// Images //
 	var garciaImg = "assets/images/garcia.jpg";
@@ -25,42 +27,53 @@ $(document).ready(function(){
 
 // GAME //
 	
+	var gameStarted = false;
 	var characterSelected;
 	var challengerSelected; 
 	var currentSong;
+	var attackClicked = false
+	var turn = 1;
+
+// DISPLAY //
+
+	var charSelect = $("#character-select");
+	var charRowOne = $("#character-row-1");
+	var charRowTwo = $("#character-row-2");
+	var challengers = $("#challengers");
+	var action = $("#action");
+	var attack = $("#attack-button");
+	var playerSide = $("#playerSide");
+	var challengerSide = $("#challengerSide");	
+
+// CHARACTER VARIABLES //
+
+	var characters = $('.character');
+	var player = $('.player');
+
+// CHARACTERS //
+
+	var jerryGarcia;
+	var jimiHendrix;
+	var janisJoplin; 
+	var johnLennon;
+	var jimMorrison;
 
 // SOUND //
 
-	// Creating sound //
-	function sound(src) {
-	    this.sound = document.createElement("audio");
-	    this.sound.src = src;
-	    this.sound.setAttribute("preload", "auto");
-	    this.sound.setAttribute("controls", "none");
-	    this.sound.style.display = "none";
-	    document.body.appendChild(this.sound);
-	    this.play = function(){
-	        this.sound.play();
-	    }
-	    this.stop = function(){
-	        this.sound.pause();
-	    }
-	}
-
 	var soundInit = function() {
 
-		garcia = new sound("assets/sounds/garcia_touch.mp3")
-		hendrix = new sound("assets/sounds/hendrix_watch.mp3")
-		janis = new sound("assets/sounds/janis_heart.mp3");
-		lennon = new sound("assets/sounds/lennon_help.mp3");
-		morrison = new sound("assets/sounds/morrison_fire.mp3");
+		garcia = new sound("assets/sounds/garciatouch.mp3")
+		hendrix = new sound("assets/sounds/hendrixwatch.mp3")
+		janis = new sound("assets/sounds/janisheart.mp3");
+		lennon = new sound("assets/sounds/lennonhelp.mp3");
+		morrison = new sound("assets/sounds/morrisonstrange.mp3");
 
 	// Song Arrays //
-		garciaSongArray = [ garcia_touch];
-		hendrixSongArray = [ hendrix_watch ];
-		janisSongArray = [ janis_heart ];
-		lennonSongArray = [ lennon_help ];
-		morrisonSongArray = [ morrison_fire ];
+		garciaSongArray = [ garciatouch];
+		hendrixSongArray = [ hendrixwatch ];
+		janisSongArray = [ janisheart ];
+		lennonSongArray = [ lennonhelp ];
+		morrisonSongArray = [ morrisonstrange ];
 	}
 
 // CLASSES //
@@ -83,12 +96,15 @@ $(document).ready(function(){
 // LOGIC //
 	var startGame = function() {
 	
-	// Reset Numbers //
-		turn = 1;
+	// Game Start //
+if (gameStarted == false){
 
-		characterSelected = false;
-		challengerSelected = false; // RESET as TRUE //
+			$("#text-area").empty();
+			$("#text-area").prepend("<p>Choose your Postage Rock Icon!</p>")
+			
+			gameStarted = true;
 
+			$('#playerSide').empty();
 	// Characters //
 		jerryGarcia = new character("Jerry Garcia", garciaImg, garciaSongArray, 100, 10, 10);
 		jimiHendrix = new character("Jimi Hendrix", hendrixImg, hendrixSongArray, 100, 10, 10);
@@ -96,25 +112,46 @@ $(document).ready(function(){
 		johnLennon = new character("John Lennon", lennonImg, lennonSongArray, 100, 10, 10);
 		jimMorrison = new character("Jim Morrison", morrisonImg, morrisonSongArray, 100, 10, 10);
 
+	// Clear Old //
+			$(".character").find('.name').empty()
+			$(".character").find('.hp').empty()
+
+			createCharacterDiv('jerryGarcia', garciaImg)
+			createCharacterDiv('jimiHendrix', hendrixImg)
+			createCharacterDiv('janisJoplin', janisImg)
+			createCharacterDiv('johnLennon', lennonImg)
+			createCharacterDiv('jimMorrison', morrisonImg)
+
+	// Reset //
+			console.log("starting new game")
+			turn = 1;
+
+			characterSelected = false;
+			challengerSelected = false; 
 
 	// Append to DIVs //
-		charSelect.append("<img id = 'jerryGarcia' class ='character img-responsive' src='" + jerryGarcia.image + "'>")
-		$("#jerryGarcia").data("character", jerryGarcia)
-
-		charSelect.append("<img id = 'jimiHendrix' class ='character img-responsive' src='" + jimiHendrix.image + "'>")
-		$("#jimiHendrix").data("character", jimiHendrix)
-
-		charSelect.append("<img id = 'janisJoplin' class ='character img-responsive' src='" + janisJoplin.image + "'>")
-		$("#janisJoplin").data("character", janisJoplin)
-
-		charSelect.append("<img id = 'johnLennon' class ='character img-responsive' src='" + johnLennon.image + "'>")
-		$("#johnLennon").data("character", johnLennon)
-
-		charSelect.append("<img id = 'jimMorrison' class ='character img-responsive' src='" + jimMorrison.image + "'>")
-		$("#jimMorrison").data("character", jimMorrison)
+			$("#jerryGarcia").data("character", jerryGarcia)
+			$("#jerryGarcia").find('.hp').append($("#jerryGarcia").data("character") .hp)
+			$("#jerryGarcia").find('.name').append($("#jerryGarcia").data("character").name)
+				
+			$("#jimiHendrix").data("character", jimiHendrix)
+			$("#jimiHendrix").find('.hp').append($("#jimiHendrix").data("character").hp)
+			$("#jimiHendrix").find('.name').append($("#jimiHendrix").data("character").name)
+		
+			$("#janisJoplin").data("character", janisJoplin)
+			$("#janisJoplin").find('.hp').append($("#janisJoplin").data("character").hp)
+			$("#janisJoplin").find('.name').append($("#janisJoplin").data("character").name)
+			
+			$("#johnLennon").data("character", johnLennon)
+			$("#johnLennon").find('.hp').append($("#johnLennon").data("character").hp)
+			$("#johnLennon").find('.name').append($("#johnLennon").data("character").name)
+		
+			$("#jimMorrison").data("character", jimMorrison)
+			$("#jimMorrison").find('.hp').append($("#jimMorrison").data("character").hp)
+			$("#jimMorrison").find('.name').append($("#jimMorrison").data("character").name)
 	}
-
-
+}
+	
 	var winCheck = function(player, challenger) {
 		// Player //
 		if (player.data('character').hp <= 0) {
@@ -122,9 +159,7 @@ $(document).ready(function(){
 		// Clear //
 			$("#text-area").empty();
 			
-			$("#text-area").prepend("You died!");
-			
-		// End //
+			$("#text-area").prepend("Your Cancelled!");			
 
 		// Challenger //	
 		}else if (challenger.data('character').hp <= 0) {
@@ -132,29 +167,29 @@ $(document).ready(function(){
 		// Clear //
 			$("#text-area").empty();
 			
-			$("#text-area").prepend("Challenger defeated!");
+			$("#text-area").prepend("You've been Cancelled!");
 
 		// Stop Music //
-			console.log("current song: " + currentSong)
 			currentSong.stop();
 
 		// Extra Characters //
 			if ($("#challengers").children().length == 0) {
 
 		// End //
-				window.setTimeout(function(){$("#text-area").empty(); 
-					$("#text-area").prepend("You win!")}, 1500)
+			window.setTimeout(function(){$("#text-area").empty(); 
+			$("#text-area").prepend("You've been delivered!")}, 1500)
 
 		// Victory Song //
-				currentSong = $(".player").data('character').randomSong()
-				currentSong.play()		
-
+			currentSong = $(".player").data('character').randomSong()
+			currentSong.play()		
+			gameStarted = false;
+			
 			}else{
 				challengerSelected = false;
 
-		// Another Challenger >2.5 //
+		// Another Challenger //
 				window.setTimeout(function(){$("#text-area").empty();
-					$("#text-area").prepend("Choose your opponent!")}, 2500)
+				$("#text-area").prepend("Pick Your Postage!")}, 2500)
 			}
 
 		};
@@ -177,82 +212,47 @@ $(document).ready(function(){
 
 		$('.player').find('.hp').append("\xa0 HP: "+ $('.player').data("character").hp)
 		$('.chosen-challenger').find('.hp').append("\xa0 HP: "+ $('.chosen-challenger').data("character").hp)
+
+	var createCharacterDiv = function(id, imgsrc) {
+		$('#character-select').append("<div class ='character' id = '" + id + "'><h1 class='name'>&nbsp </h1><h1 class ='hp'>&nbsp HP: </h1></div>")
+		$('#character-select #'+ id).append("<img class='img responsive' src ='" + imgsrc + "'/>")
+		console.log($('#character-select #'+ id))
 	}
 
-// SOUNDS INIT //
+// Scene Change //
 
-	soundInit()
+	var chooseCharacterScene = function(){
 
-// DISPLAY //
+	}
 
-	var charSelect = $("#character-select");
-	var charRowOne = $("#character-row-1");
-	var charRowTwo = $("#character-row-2");
-	var challengers = $("#challengers");
-	var deck = $("#deck");
-	var attack = $("#attack-button");
-	var playerSide = $("#playerSide");
-	var challengerSide = $("#challengerSide");
-	
+	var fightScene = function(){
+		$('#main-container').empty();
+		$('#main-container').append('<div class="row" id="character-row-1">' + 
+			'<div class="col-md-3" id="playerSide"></div>' +
+			'<!-- Empty space between characters --><div class="col-md-6"' +
+			'id="centerSpace"></div><div class="col-md-3" id="challengerSide"></div></div>')
 
-// CHARACTER VARIABLES //
-
-	var characters = $('.character');
-	var player = $('.player');
-	var turn = 1;
-
-
-// CHARACTERS //
-
-	var jerryGarcia;
-	var jimiHendrix;
-	var janisJoplin; 
-	var johnLennon;
-	var jimMorrison;
-
-
-// NEW GAME CLICK //
-
-		// Reset //
-		turn = 1;
-
-		characterSelected = false;
-		challengerSelected = false; // reset to true once an enemy is defeated 
-
-		jerryGarcia = new character("Jerry Garcia", garciaImg, garciaSongArray, 1000, 10, 10);
-		jimiHendrix = new character("Jimi Hendrix", hendrixImg, hendrixSongArray, 800, 10, 10);
-		janisJoplin = new character("Janis Joplin", janisImg, janisSongArray, 900, 10, 10);
-		johnLennon = new character("John Lennon", lennonImg, lennonSongArray, 750, 10, 10);
-		jimMorrison = new character("Jim Morrison", morrisonImg, morrisonSongArray, 700, 10, 10);
-
-		// Characters to DIV //
-		$("#jerryGarcia").data("character", jerryGarcia)
-		$("#jerryGarcia").find('.hp').append($("#jerryGarcia").data("character").hp)
-		$("#jerryGarcia").find('.name').append($("#jerryGarcia").data("character").name)
-		charSelect.append($('#jerryGarcia'))
-		
-		$("#jimiHendrix").data("character", jimiHendrix)
-		$("#jimiHendrix").find('.hp').append($("#jimiHendrix").data("character").hp)
-		$("#jimiHendrix").find('.name').append($("#jimiHendrix").data("character").name)
-		charSelect.append($('#jimiHendrix'))
-
-		$("#janisJoplin").data("character", janisJoplin)
-		$("#janisJoplin").find('.hp').append($("#janisJoplin").data("character").hp)
-		$("#janisJoplin").find('.name').append($("#janisJoplin").data("character").name)
-		charSelect.append($('#janisJoplin'))
-	
-		$("#johnLennon").data("character", johnLennon)
-		$("#johnLennon").find('.hp').append($("#johnLennon").data("character").hp)
-		$("#johnLennon").find('.name').append($("#johnLennon").data("character").name)
-		charSelect.append($('#johnLennon'))
-
-		$("#jimMorrison").data("character", jimMorrison)
-		$("#jimMorrison").find('.hp').append($("#jimMorrison").data("character").hp)
-		$("#jimMorrison").find('.name').append($("#jimMorrison").data("character").name)
-		charSelect.append($('#jimMorrison'))
-
+	}
 
 // CHARACTER CLICK //
+
+	$('#new-game').on("click", startGame)		
+
+	// Image Click ??
+	$('#characterRow div').on("click", '.character', function(){
+
+		console.log("character clicked")
+		if(characterSelected == false){ 
+			characterSelected = true;
+
+
+
+		// Fade Music //
+		if (currentSong ){
+			currentSong.fade(1, 0, 1000)
+				
+		}
+
 
 	$('.character').on("click", function(){
 
@@ -272,6 +272,7 @@ $(document).ready(function(){
 
 			challengers.append($('.character')) 
 			$('#character-select').empty(); 
+			$("#playerSide").prepend(this);
 			$(this).addClass("player") 
 
 			// Clear //
@@ -300,48 +301,84 @@ $(document).ready(function(){
 
 	attack.on("click", function(){
 
-		// Player & Challenger Choosen //
+		// Player & Challenger //
 		if(characterSelected == true && challengerSelected == true){
-			console.log("attack!")
 
-			// Player On //
-			console.log($('.player').data('character').ap)
-
-			// Player Up // 
+			attackClicked = true;
+			
+			// Player Attack < //
 			var playerAttack = $('.player').data('character').ap * turn;
 
-			// Minus Player //
+			// Player and Challenger //
+			$('.player').velocity({left: '100px'})
+			$('.chosen-challenger').velocity({opacity: .5}, 'fast');
+
+			$('.chosen-challenger img')
+				.velocity({borderColor: '#F50C0C'})
+				.velocity('reverse');
+
+			$('.chosen-challenger').velocity({opacity: 2}, 'fast');
+
+			$('.player').velocity({left: '0px'}, 'fast');
+						
+			// Player - from Challenger HP //
 			$('.chosen-challenger').data('character').hp -= playerAttack;
 			console.log("challenger hp: " + $('.chosen-challenger').data('character').hp);
 
+			// HP Update //
 			updateHP()
 
-			// Attack Slogan //
+			// Action Display //
 			textAreaCheck()
 			$("#text-area").prepend("<p>You attacked " + $(".chosen-challenger").data('character').name +
 			" for " + playerAttack + " damage!<hr></p>")
 
-			// Win < Attack //
+			// Player Win //
 			winCheck($('.player'), $('.chosen-challenger'));
 
-			// Challenger > Attack //
-			var challengerAttack = $('.chosen-challenger').data('character').cp;
+			// Challenger Counter //
+			window.setTimeout(function(){
+				var challengerAttack = $('.chosen-challenger').data('character').cp;
 
-			// Minus Player //
-			$('.player').data('character').hp -= challengerAttack;
-			console.log("player hp: " + $('.player').data('character').hp);
+				// Counter Movement //
 
-			updateHP()
+				$('.chosen-challenger').velocity({left: '-100px'});
 
-			// Counter Attack Slogan //
-			textAreaCheck()
-			$("#text-area").prepend('<p>' + $(".chosen-challenger").data('character').name + " attacked you for " +
-			" for " + challengerAttack + " Cancelled!<hr></p>")
+				$('.player').velocity({opacity: .7}, 'fast');
 
-// END this GAME //
+				$('.player img')
 
-			turn += 1;
-			winCheck($('.player'), $('.chosen-challenger'));
+					.velocity({borderColor: '#F50C0C'})
+					.velocity('reverse');
+
+				$('.player').velocity({opacity: 1}, 'fast')
+
+				$('.chosen-challenger').velocity({left: '0px'}, 'fast');
+
+				// subtract counter-attack from player hp
+				$('.player').data('character').hp -= challengerAttack;
+				console.log("player hp: " + $('.player').data('character').hp);
+
+				// update the HP display
+				updateHP()
+
+				// display counter-attack text in text area
+				textAreaCheck()
+				$("#text-area").prepend('<p>' + $(".chosen-challenger").data('character').name + " attacked you for " +
+				" for " + challengerAttack + " Cancelled!<hr></p>")
+
+
+
+				// end of turn -- advance turn and check if game should end
+				turn += 1;
+				winCheck($('.player'), $('.chosen-challenger'));
+			}, 800) // delay before counter attack animation is played
+
+
+				// let the player click attack again after attack routine is completed
+				window.setTimeout(function(){
+					attackClicked = false;
+				}, 1200)
 
 			}
 
@@ -350,9 +387,11 @@ $(document).ready(function(){
 		}
 	});
 
-	
-
-
-
+// Start Music //
+	console.log('starting')
+	soundInit()
+	//$('#introModal').modal({backdrop: true});
+	currentSong = mrpostman;
+	currentSong.play();
 
 });
