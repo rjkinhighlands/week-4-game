@@ -19,7 +19,7 @@ img {
 	float:center;
 }
 /*button {
-	text-align: center;
+	font-weight:bold;
 }*/
 
 /*#character-select, #challengers {
@@ -69,6 +69,7 @@ h1 {
 h2 {
 	font-size: 90px;
 	color: blue;
+	font-weight:bold;
 	text-align: center;
 }
 /*#title {
@@ -109,6 +110,7 @@ position: relative;
 
 .character .hp {	
 	font-size: 25px;
+	font-weight:bold;
 	color: white;
 	position: relative;
 	top: 25px;
