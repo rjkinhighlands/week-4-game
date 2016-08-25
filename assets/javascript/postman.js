@@ -3,7 +3,6 @@ $(document).ready(function(){
 // GAME START //
 
 var theme = new Audio("assets/sounds/mrpostman.mp3");
-theme.volume = 0.3; 
 
 // VARIABLES //
 
@@ -51,7 +50,6 @@ var characters = [
 		attack: 20,
 		health: 200,
 		choseSound: new Audio('assets/sounds/lennonhelp.mp3')
-
 	},
 
 	morrison = {
@@ -65,8 +63,8 @@ var characters = [
 ];	
 
 // START //
-	$('#top').append("<img src = 'assets/images/burner.jpg' class = 'img-responsive'>");
-	$('#bottom').append("<button type='button' class='btn btn-outline-warning' id='start'>Start Delivery</button>");
+
+	$('#bottom').append("<button type='button' class='btn btn-xlarge btn-primary' id='start'>Start Delivery</button>");
 	fadeAllIn();
 
 	// Start Delivery //
@@ -96,6 +94,7 @@ var characters = [
 	};
 
 // GAME //
+
 	function playGame(){
 		fadeAllOut();
 		$('#top').append("<img src = 'assets/images/mrpostman.jpg' class = 'img-responsive'>");
@@ -137,7 +136,9 @@ var characters = [
 				attack(character, opponent)
 			});	
 		}
+
 // CHOOSE POSTAGE //
+
 	function chooseChar(char){
 		characterChosen = true; 
 		var sound = char.choseSound;
@@ -146,9 +147,9 @@ var characters = [
 		sound.play();
 		fadeAllOut();
 		battle(char);
-		//var randombg = backgrounds[Math.floor(Math.random()*3)]
 	}
 // CHOOSE OPPONENT //
+
 	function chooseOpponent(char){
 		if(enemyChosen == false){
 			opponent = char; 
@@ -159,7 +160,9 @@ var characters = [
 			$('#attackButton').append("<button class = 'btn btn-danger attackButton'>Cancel!</button>");
 		}
 	}
-//// Battleground //
+
+//// BATTLEGROUND //
+
 	function battle(char){
 		$('#top').append("<div id = 'enemies'></div>");
 		$('#middle').append("<div class = 'action'><div id = 'action'><p>Ready for Snail Mail? Choose any postage to begin attacking.</p></div></div>");
@@ -173,6 +176,7 @@ var characters = [
 	fadeAllIn();
 
 // ATTACK //
+
 	function attack(attacker, defender){
 		if(defender.health > 0 && attacker.health > 0){
 		// DOMS Players //
